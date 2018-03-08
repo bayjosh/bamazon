@@ -23,9 +23,9 @@ connection.connect(function (err) {
 function afterConnection() {
     connection.query("SELECT item_id, product_name, price FROM products", function (err, res) {
         if (err) throw err;
-        // console.log("");
-        // console.table(res);
-        // console.log("");
+        console.log("");
+        console.table(res);
+        console.log("");
         productSelect();
 
     });
@@ -36,25 +36,25 @@ function productSelect() {
         if (err) throw err;
         var choiceArray = [];
         inquirer.prompt([
-                {
-                    name: "productSelect",
-                    type: "rawlist",
-                    choices: function () {
-                        for (var i = 0; i < results.length; i++) {
-                            choiceArray.push(results[i].product_name + " | $" + results[i].price);
-                        }
-                        return choiceArray;
+            {
+                name: "productSelect",
+                type: "list",
+                choices: function () {
+                    for (var i = 0; i < results.length; i++) {
+                        choiceArray.push(results[i].product_name + " | $" + results[i].price);
+                    }
+                    return choiceArray;
 
-                    },
-                    message: "Which product would you like to buy? (Use arrows to select)",
-                    pageSize: 20,
                 },
-            ])
+                message: "Which product would you like to buy? (Use arrows to select)",
+                pageSize: 20,
+            },
+        ])
             .then(function (answer) {
                 // get the information of the chosen item
                 var chosenItem;
                 for (var i = 0; i < results.length; i++) {
-                    if (choiceArray.indexOf(answer.productSelect) === results[i].item_id) {
+                    if (choiceArray.indexOf(answer.productSelect) + 1 === results[i].item_id) {
                         chosenItem = results[i];
                     }
                 }
@@ -65,22 +65,46 @@ function productSelect() {
                         message: "How many of those babies would you like to buy, hun?",
                         validate: function (value) {
                             if (isNaN(value) === false && value <= chosenItem.stock_quantity) {
-                                console.log("coming right up!");
                                 return true;
                             } else if (isNaN(value) === false && value > chosenItem.stock_quantity) {
                                 console.log("\nI can't give ya that many, babe! We only have " + chosenItem.stock_quantity + " left in stock");
-                                return false;
+                                // return false;
                             } else {
                                 console.log("\nIt's gotta be a number, darlin'!")
-                                return false;
+                                // return false;
                             }
                         }
 
                     }
-                ])
+                ]).then(function (answer) {
+                    connection.query("UPDATE products SET stock_quantity = " + (parseInt(chosenItem.stock_quantity) - parseInt(answer.productUnits)) + " WHERE item_id =" + chosenItem.item_id, function (err, res) {
+                        if (err) throw err;
+                    })
+
+                    console.log("\nPurchase success! Your total purchase is $" + (answer.productUnits * chosenItem.price) + "\n")
+
+                    inquirer.prompt([
+                        {
+                            name: "anotherPurchase",
+                            type: "confirm",
+                            message: "Want to buy something else, babe?",
+                        }
+                    ]).then(function (answer) {
+
+                        if (answer.anotherPurchase === true) {
+                            console.log("");
+                            productSelect();
+                            console.log("");
+                        } else {
+                            console.log("\nthanks for shoppin with us!\n")
+                            connection.end();
+                        }
+                    })
+                })
+                
             })
 
-        connection.end();
+
     })
 }
 
