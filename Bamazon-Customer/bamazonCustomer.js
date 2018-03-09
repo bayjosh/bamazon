@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cTable = require('console.table');
+var colors = require('colors');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -23,6 +24,8 @@ connection.connect(function (err) {
 function afterConnection() {
     connection.query("SELECT item_id, product_name, price FROM products", function (err, res) {
         if (err) throw err;
+        console.log("");
+        console.log("WELCOME TO BAMAZON!".yellow)
         console.log("");
         console.table(res);
         console.log("");
@@ -67,10 +70,10 @@ function productSelect() {
                             if (isNaN(value) === false && value <= chosenItem.stock_quantity) {
                                 return true;
                             } else if (isNaN(value) === false && value > chosenItem.stock_quantity) {
-                                console.log("\nI can't give ya that many, babe! We only have " + chosenItem.stock_quantity + " left in stock");
+                                console.log("\nI can't give ya that many, babe! We only have ".red + chosenItem.stock_quantity + " left in stock".red);
                                 return false;
                             } else {
-                                console.log("\nIt's gotta be a number, darlin'!")
+                                console.log("\nIt's gotta be a number, darlin'!".red)
                                 return false;
                             }
                         }
@@ -81,7 +84,7 @@ function productSelect() {
                         if (err) throw err;
                     })
 
-                    console.log("\nPurchase success! Your total purchase is $" + (answer.productUnits * chosenItem.price) + "\n")
+                    console.log("\nPurchase success! Your total purchase is ".green + "$" + (answer.productUnits * chosenItem.price) + "\n")
 
                     inquirer.prompt([
                         {
@@ -96,7 +99,7 @@ function productSelect() {
                             productSelect();
                             console.log("");
                         } else {
-                            console.log("\nthanks for shoppin with us!\n")
+                            console.log("\nThanks for shoppin with us!\n".yellow)
                             connection.end();
                         }
                     })

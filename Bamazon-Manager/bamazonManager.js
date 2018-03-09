@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cTable = require('console.table');
+var colors = require('colors');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -60,14 +61,14 @@ function viewLowInventory() {
         if (err) throw err;
 
         if (res[0] === undefined) {
-            console.log("You're good on quantities for now! Nothing lower than 5.\n")
+            console.log("You're good on quantities for now! Nothing lower than 5.\n".green)
             start();
         } else {
             console.log("");
             console.table(res);
             console.log("");
             for (var i = 0; i < res.length; i++) {
-                console.log("You need to restock " + res[i].product_name + "!")
+                console.log("You need to restock ".red + res[i].product_name + "!".red)
             }
             start();
         }
@@ -109,10 +110,10 @@ function addInventory() {
                             if (isNaN(value) === false && value <= 1000 && value > 0) {
                                 return true;
                             } else if (isNaN(value) === false && value > 1000 && value > 0) {
-                                console.log("\n C'mon now, that's too many");
+                                console.log("\n C'mon now, that's too many".red);
                                 return false;
                             } else {
-                                console.log("\nIt's gotta be a number, darlin'!")
+                                console.log("\nIt's gotta be a number, darlin'!".red)
                                 return false;
                             }
                         }
@@ -123,13 +124,13 @@ function addInventory() {
                         if (err) throw err;
                     })
 
-                    console.log("\nRestock success! Your items are now restocked. Good job, Manager!\n")
+                    console.log("\nRestock success! Your items are now restocked. Good job, Manager!\n".green)
 
                     inquirer.prompt([
                         {
                             name: "anotherRestock",
                             type: "confirm",
-                            message: "Want to buy something else, big guy?",
+                            message: "Want to restock something else, big guy?",
                         }
                     ]).then(function (answer) {
 
@@ -172,9 +173,11 @@ function addProduct() {
         }
     ])
         .then(function (answer) {
-            connection.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ('"+answer.name+"', '"+answer.dept+"', "+answer.price+", "+answer.stock_quantity+")" , function (err, results) {
+            connection.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ('" + answer.name + "', '" + answer.dept + "', " + answer.price + ", " + answer.stock_quantity + ")", function (err, results) {
                 if (err) throw err;
-                console.log("Success! You added a new product!");
+                console.log("");
+                console.log("Success! You added a new product!".green);
+                console.log("");
                 start();
             })
         });
