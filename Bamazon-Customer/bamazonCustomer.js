@@ -68,10 +68,10 @@ function productSelect() {
                                 return true;
                             } else if (isNaN(value) === false && value > chosenItem.stock_quantity) {
                                 console.log("\nI can't give ya that many, babe! We only have " + chosenItem.stock_quantity + " left in stock");
-                                // return false;
+                                return false;
                             } else {
                                 console.log("\nIt's gotta be a number, darlin'!")
-                                // return false;
+                                return false;
                             }
                         }
 
