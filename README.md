@@ -11,11 +11,20 @@ As a customer, a user can purchase one of a number of products that alters the d
 
 [User Flow](https://drive.google.com/file/d/14UxSR3cnsJ1oS7lSxAvN0Yc0JY4InQEn/view)
 
-###Screenshot:
+###Customer Screenshot:
 
+!(Customer_Screenshot.png)
+
+###Manager Screenshot:
+
+!(Manager_Screenshot.png)
 
 ###Technologies Used:  
  - SQL/MYSQL
  - Vanilla Javascript
  - Node JS
  - NPM: Colors, Console Table, Inquirer, and MYSQL packages
+
+###Future Improvements: 
+
+Future improvements will include a supervisor view that allows a user to view product and department sales, add new departments, and analyze total profits.
