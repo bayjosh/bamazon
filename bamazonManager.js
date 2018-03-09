@@ -94,10 +94,9 @@ function addInventory() {
             },
         ])
             .then(function (answer) {
-                // get the information of the chosen item
                 var chosenItem;
                 for (var i = 0; i < results.length; i++) {
-                    if (choiceArray.indexOf(answer.restockSelect) + 1 === results[i].item_id) {
+                    if (choiceArray.indexOf(answer.restockSelect) === i) {
                         chosenItem = results[i];
                     }
                 }

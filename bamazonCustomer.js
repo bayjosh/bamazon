@@ -17,25 +17,16 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-
-    afterConnection();
+    productSelect();
 });
-
-function afterConnection() {
-    connection.query("SELECT item_id, product_name, price FROM products", function (err, res) {
-        if (err) throw err;
-        console.log("");
-        console.log("WELCOME TO BAMAZON!".yellow)
-        console.log("");
-        console.table(res);
-        console.log("");
-        productSelect();
-
-    });
-}
 
 function productSelect() {
     connection.query("SELECT product_name, item_id, price, stock_quantity FROM products", function (err, results) {
+        console.log("");
+        console.log("*******************".yellow);
+        console.log("WELCOME TO BAMAZON!".yellow);
+        console.log("*******************".yellow);
+        console.log("");
         if (err) throw err;
         var choiceArray = [];
         inquirer.prompt([
@@ -49,7 +40,7 @@ function productSelect() {
                     return choiceArray;
 
                 },
-                message: "Which product would you like to buy? (Use arrows to select)",
+                message: "Which product would you like to buy? (Use arrows to select)\n",
                 pageSize: 20,
             },
         ])
@@ -57,10 +48,11 @@ function productSelect() {
                 // get the information of the chosen item
                 var chosenItem;
                 for (var i = 0; i < results.length; i++) {
-                    if (choiceArray.indexOf(answer.productSelect) + 1 === results[i].item_id) {
+                    if (choiceArray.indexOf(answer.productSelect) === i) {
                         chosenItem = results[i];
                     }
                 }
+                console.log("");
                 inquirer.prompt([
                     {
                         name: "productUnits",
@@ -106,7 +98,6 @@ function productSelect() {
                 })
                 
             })
-
 
     })
 }
