@@ -13,7 +13,7 @@ As a customer, a user can purchase one of a number of products that alters the d
 
 ###Customer Screenshot:
 
-![Screenshot of Customer View](Customer_Screenshot)
+![Screenshot of Customer View](images/Customer_Screenshot.png)
 
 ###Manager Screenshot:
 
