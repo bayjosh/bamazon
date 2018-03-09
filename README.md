@@ -9,7 +9,7 @@ As a customer, a user can purchase one of a number of products that alters the d
 
 ###User Flow Video: 
 
-![User Flow](https://drive.google.com/file/d/14UxSR3cnsJ1oS7lSxAvN0Yc0JY4InQEn/view)
+[User Flow](https://drive.google.com/file/d/14UxSR3cnsJ1oS7lSxAvN0Yc0JY4InQEn/view)
 
 ###Screenshot:
 
