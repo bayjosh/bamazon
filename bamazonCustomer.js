@@ -57,15 +57,15 @@ function productSelect() {
                     {
                         name: "productUnits",
                         type: "input",
-                        message: "How many of those babies would you like to buy, hun?",
+                        message: "How many of those would you like to buy?",
                         validate: function (value) {
                             if (isNaN(value) === false && value <= chosenItem.stock_quantity) {
                                 return true;
                             } else if (isNaN(value) === false && value > chosenItem.stock_quantity) {
-                                console.log("\nI can't give ya that many, babe! We only have ".red + chosenItem.stock_quantity + " left in stock".red);
+                                console.log("\nWe can't give you that many! We only have ".red + chosenItem.stock_quantity + " left in stock".red);
                                 return false;
                             } else {
-                                console.log("\nIt's gotta be a number, darlin'!".red)
+                                console.log("\nIt has to be a number! Try again.".red)
                                 return false;
                             }
                         }
@@ -82,7 +82,7 @@ function productSelect() {
                         {
                             name: "anotherPurchase",
                             type: "confirm",
-                            message: "Want to buy something else, babe?",
+                            message: "Want to buy something else?",
                         }
                     ]).then(function (answer) {
 

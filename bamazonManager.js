@@ -104,15 +104,15 @@ function addInventory() {
                     {
                         name: "restockNum",
                         type: "input",
-                        message: "How many of those babies would you like to restock?",
+                        message: "How many of those would you like to restock?",
                         validate: function (value) {
                             if (isNaN(value) === false && value <= 1000 && value > 0) {
                                 return true;
                             } else if (isNaN(value) === false && value > 1000 && value > 0) {
-                                console.log("\n C'mon now, that's too many".red);
+                                console.log("\n C'mon now, we can't carry that many.".red);
                                 return false;
                             } else {
-                                console.log("\nIt's gotta be a number, darlin'!".red)
+                                console.log("\nIt's gotta be a number! Try again.".red)
                                 return false;
                             }
                         }
@@ -129,7 +129,7 @@ function addInventory() {
                         {
                             name: "anotherRestock",
                             type: "confirm",
-                            message: "Want to restock something else, big guy?",
+                            message: "Want to restock something else?",
                         }
                     ]).then(function (answer) {
 
@@ -153,22 +153,22 @@ function addProduct() {
         {
             name: "name",
             type: "input",
-            message: "What would you like add, mate?"
+            message: "What would you like add?"
         },
         {
             name: "dept",
             type: "input",
-            message: "What department is it in, mate?"
+            message: "What department is it in?"
         },
         {
             name: "price",
             type: "input",
-            message: "How much is it, mate?"
+            message: "How much is it?"
         },
         {
             name: "stock_quantity",
             type: "input",
-            message: "How many are you adding, mate?"
+            message: "How many are you adding?"
         }
     ])
         .then(function (answer) {
