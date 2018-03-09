@@ -17,7 +17,7 @@ As a customer, a user can purchase one of a number of products that alters the d
 
 ###Manager Screenshot:
 
-!(Manager_Screenshot.png)
+![Screenshot of Manager View](images/Manager_Screenshot.png)
 
 ###Technologies Used:  
  - SQL/MYSQL
